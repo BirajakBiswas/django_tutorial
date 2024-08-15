@@ -17,7 +17,24 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+from . import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    
+    path('',views.index, name='index'),#path is used to specify the next point after this url part which here is specified as views.index , '' is used to set what will come as the end point of the url
+    
+    path('about',views.about, name='about'),
+    
+    path('links',views.links, name='links'),
+    
+    path('removepunc',views.removepunc , name='rempun'),#removepunc is the part of the url name 
+    
+    path('capfirst',views.capfirst , name='capfirst'),
+    
+    path('newlineremove',views.newlineremove , name='newlineremove'),
+    
+    path('spaceremover',views.spaceremover , name='spaceremover'),
+    
+    path('charcount',views.charcount , name='charcount')
 ]

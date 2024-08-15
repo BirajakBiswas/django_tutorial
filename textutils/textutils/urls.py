@@ -21,23 +21,9 @@ from . import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     
-    path('template',views.template , name='template'),
+    path('',views.index , name='index'),
 
-    path('analyze',views.analyze , name='analyze'),#ok so the analyze thing is linked to templates url whereas the removepunc thing is linked to the generic url both are different kinda actually i didnt bother to delete the 1st website of links i  created
+    path('analyze',views.analyze , name='analyze')#ok so the analyze thing is linked to templates url whereas the removepunc thing is linked to the generic url both are different kinda actually i didnt bother to delete the 1st website of links i  created
     
-    path('',views.index, name='index'),#path is used to specify the next point after this url part which here is specified as views.index , '' is used to set what will come as the end point of the url
-    
-    path('about',views.about, name='about'),
-    
-    path('links',views.links, name='links'),
-    
-    #path('removepunc',views.removepunc , name='rempun'),#removepunc is the part of the url name 
-    
-    path('capfirst',views.capfirst , name='capfirst'),
-    
-    path('newlineremove',views.newlineremove , name='newlineremove'),
-    
-    path('spaceremover',views.spaceremover , name='spaceremover'),
-    
-    path('charcount',views.charcount , name='charcount')
+ 
 ]
