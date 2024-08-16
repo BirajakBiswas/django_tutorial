@@ -23,73 +23,55 @@ def analyze(request):
    
 
    #check which checxkbox is on
-    if removepunc=="on":#checking whether removepunc is on or not
-        punctuations='''. , ? ! : ; ' " ` ~ - _ ( ) [ ] { } < > / \ | @ # $ % ^ & * + = … • ¬ ° © ® ™ ‽ ¿ ¡ ¶ § † ‡ « » “ ” '''#here we are listing a few punctuations
-        analyzed=""
-        
-        for char in djtext:
-        
-            if char not in punctuations:#this is nothing we are just adding those characters to analyzed which here is the main output which does not contain characters present in punctuations
-                analyzed=analyzed + char#this way we are able to get our putput withput punctuations
-        
-        params={'purpose':'Remove Punctuations','analyzed_text':analyzed}#note 'purpose' and 'analyzed_text' are both part of analyze.html created by us,we are simply alloting them as parameters here
-        # Analyze the r
-        
-        return render(request,'analyze.html',params)
+  
     
-    elif(fullcaps=="on"):
-        analyzed=""
-        
-        for char in djtext:#djtext is the input text we will be putting in the website
-            analyzed=analyzed+char.upper()#.upper() is a built in function to make uppercase
-
-        params={'purpose':'Change to uppercase','analyzed_text':analyzed}#note 'purpose' and 'analyzed_text' are both part of analyze.html created by us,we are simply alloting them as parameters here
-        return render(request,'analyze.html',params)
-    
-    elif(newlineremover=="on"):
-        analyzed=""
-        
-        for char in djtext:
-            if char !="\n" and char!="\r":
-                analyzed=analyzed+char
-
-        
-         
-        params={'purpose':'Remove New line','analyzed_text':analyzed}#note 'purpose' and 'analyzed_text' are both part of analyze.html created by us,we are simply alloting them as parameters here
-        # Analyze the r
-        
-        return render(request,'analyze.html',params)#
     
 #code to use removepunc ,UPPERCASE and new line remover all 3 at the same time
     
-    #if removepunc == "on" and fullcaps == "on" or newlineremover == "on":
+    
+    if removepunc == "on":
+        punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
+        analyzed = ""
         for char in djtext:
-            if char not in punctuations and  char !='\n':
-                analyzed = analyzed + char.upper()
+            if char not in punctuations:
+                analyzed = analyzed + char
 
-        params = {'purpose':'removepunctuations','analyzed_text':analyzed}
-        return render(request,'analyze.html',params)
+        params = {'purpose':'Removed Punctuations', 'analyzed_text': analyzed}
+        djtext = analyzed
+        # return render(request, 'analyze.html', params)
 
+    if(fullcaps=="on"):
+        analyzed = ""
+        for char in djtext:
+            analyzed = analyzed + char.upper()
 
-    
-    elif(extraspaceremover=="on"):
-        analyzed=""
-        
-        for index,char in enumerate(djtext):#enumerate is a built in function which counts the ginti of for loop
-            if djtext[index]==" " and djtext[index+1]==" ":#basically here we are specifying that if there exists a space or two spaces in djtext then we will pass/we will not account that entry
-                pass
+        params = {'purpose': 'Changed to Uppercase', 'analyzed_text': analyzed}
+        djtext = analyzed
+        # Analyze the text
+        # return render(request, 'analyze.html', params)
+
+    if(extraspaceremover=="on"):
+        analyzed = ""
+        for index, char in enumerate(djtext):
+            if not(djtext[index] == " " and djtext[index+1]==" "):
+                analyzed = analyzed + char
+
+        params = {'purpose': 'Removed NewLines', 'analyzed_text': analyzed}
+        djtext = analyzed
+        # Analyze the text
+        # return render(request, 'analyze.html', params)
+
+    if (newlineremover == "on"):
+        analyzed = ""
+        for char in djtext:
+            if char != "\n" and char!="\r":
+                analyzed = analyzed + char
             else:
-                analyzed=analyzed+char
+                print("no")
+        print("pre", analyzed)
+        params = {'purpose': 'Removed NewLines', 'analyzed_text': analyzed}
 
-        
-         
-        params={'purpose':'Remove Extra Space','analyzed_text':analyzed}#note 'purpose' and 'analyzed_text' are both part of analyze.html created by us,we are simply alloting them as parameters here
-        # Analyze the r
-        
-        return render(request,'analyze.html',params)
-    
-    
-    else:
-    
-        return HttpResponse("Error")#error is returned when the Remove Punctuations is not checked i.e removepunc is off hence will return error
+    if(removepunc != "on" and newlineremover!="on" and extraspaceremover!="on" and fullcaps!="on"):
+        return HttpResponse("Please select any operation and try again")
 
+    return render(request, 'analyze.html', params)
