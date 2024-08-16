@@ -13,13 +13,13 @@ def index(request):#template is the path/object/function name and templates is t
 
 def analyze(request):
     #get the text djtext is our inout text that i s to be analyzed
-    djtext=request.GET.get('text','default')#here this is used to just display the text in the terminal,basically we can say it is identifying the text,if no text is there it returns "default"
+    djtext=request.POST.get('text','default')#here this is used to just display the text in the terminal,basically we can say it is identifying the text,if no text is there it returns "default"
     
     #check checkbox values
-    removepunc=request.GET.get('removepunc','off')
-    fullcaps=request.GET.get('fullcaps','off')
-    newlineremover=request.GET.get('newlineremover','off')
-    extraspaceremover=request.GET.get('extraspaceremover','off')
+    removepunc=request.POST.get('removepunc','off')#POST request is used in place of GET request for a cleaner url and also it supports larger chunk of data I guess
+    fullcaps=request.POST.get('fullcaps','off')
+    newlineremover=request.POST.get('newlineremover','off')
+    extraspaceremover=request.POST.get('extraspaceremover','off')
    
 
    #check which checxkbox is on
@@ -50,7 +50,7 @@ def analyze(request):
         analyzed=""
         
         for char in djtext:
-            if char !="\n":
+            if char !="\n" and char!="\r":
                 analyzed=analyzed+char
 
         
