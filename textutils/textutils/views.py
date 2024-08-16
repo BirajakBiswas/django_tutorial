@@ -58,7 +58,19 @@ def analyze(request):
         params={'purpose':'Remove New line','analyzed_text':analyzed}#note 'purpose' and 'analyzed_text' are both part of analyze.html created by us,we are simply alloting them as parameters here
         # Analyze the r
         
+        return render(request,'analyze.html',params)#
+    
+#code to use removepunc ,UPPERCASE and new line remover all 3 at the same time
+    
+    #if removepunc == "on" and fullcaps == "on" or newlineremover == "on":
+        for char in djtext:
+            if char not in punctuations and  char !='\n':
+                analyzed = analyzed + char.upper()
+
+        params = {'purpose':'removepunctuations','analyzed_text':analyzed}
         return render(request,'analyze.html',params)
+
+
     
     elif(extraspaceremover=="on"):
         analyzed=""
